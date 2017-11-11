@@ -1,14 +1,16 @@
 ENVFILE=./support/testenv
 
+all:            build run
+
 refresh-image:
-				docker pull hortonworks/docker-e2e-cloud
+				docker pull hortonworks/cloudbreak-web-e2e
 
 run-gui-tests:
 				./scripts/e2e-gui-test.sh
 
 build:
 
-				docker build -t hortonworks/docker-e2e-cloud .
+				docker build -t hortonworks/cloudbreak-web-e2e .
 
 run:
 
@@ -19,8 +21,8 @@ run:
                     --name cloud-e2e-runner \
                     --env-file $(ENVFILE) \
                     -v $(PWD):/protractor/project \
-                    hortonworks/docker-e2e-cloud npm test
+                    hortonworks/cloudbreak-web-e2e npm test
                     RESULT=$?
 
 .PHONY:
-				run
+				all

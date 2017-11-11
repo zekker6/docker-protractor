@@ -7,6 +7,9 @@
 : ${PASSWORD:? required}
 : ${ENVFILE:=./support/testenv}
 
+echo "Refresh the Test Runner Docker image"
+docker pull hortonworks/cloudbreak-web-e2e
+
 export TEST_CONTAINER_NAME=cloud-e2e-runner
 
 echo "Checking stopped containers"
@@ -34,9 +37,10 @@ else
     --rm \
     --name $TEST_CONTAINER_NAME \
     --env-file $ENVFILE \
+    --net=host \
     -v $(pwd):/protractor/project \
     -v /dev/shm:/dev/shm \
-    hortonworks/docker-e2e-cloud npm test
+    hortonworks/cloudbreak-web-e2e npm test
     RESULT=$?
 fi
 
