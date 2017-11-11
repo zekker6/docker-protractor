@@ -56,7 +56,7 @@ Here is the main part:
 ```
 
 ## Makefile
-We created a very simple [Makefile](https://github.com/sequenceiq/docker-e2e-protractor/blob/master/Makefile) to be able build and run easily our Docker image on your local machine:
+We created a very simple [Makefile](Makefile) to be able build and run easily our Docker image on your local machine:
 ```
 make build
 ```
