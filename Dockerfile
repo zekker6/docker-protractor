@@ -73,11 +73,11 @@ RUN rm -fr /root/tmp
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
-RUN yarn install --unsafe-perm -g \
+RUN npm install --unsafe-perm -g \
     protractor \
-    typescript \
-# Get the latest Google Chrome driver
-  && yarn update
+    typescript
+  && yarn upgrade \
+  && npm update \
 
 # Set the working directory
 WORKDIR /protractor/
