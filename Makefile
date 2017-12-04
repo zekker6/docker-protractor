@@ -21,7 +21,7 @@ run:
                     --name cloud-e2e-runner \
                     --env-file $(ENVFILE) \
                     -v $(PWD):/protractor/project \
-                    hortonworks/cloudbreak-web-e2e npm test
+                    hortonworks/cloudbreak-web-e2e yarn test
                     RESULT=$?
 
 .PHONY:

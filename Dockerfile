@@ -38,6 +38,10 @@ RUN apt-get update -qqy \
     nodejs \
     build-essential
 
+# Yarn install
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
 # Latest Google Chrome installation package
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
   && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -48,7 +52,8 @@ RUN apt-get update -qqy \
     xvfb \
     google-chrome-stable \
     firefox \
-    default-jre
+    default-jre \
+    yarn
 
 RUN GECKODRIVER_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/geckodriver/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') \
   && echo $GECKODRIVER_VERSION \
@@ -68,14 +73,11 @@ RUN rm -fr /root/tmp
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
-RUN npm install --unsafe-perm -g \
+RUN yarn install --unsafe-perm -g \
     protractor \
     typescript \
 # Get the latest Google Chrome driver
-  && npm update \
-# Get the latest WebDriver Manager
-  && webdriver-manager update \
-  && npm cache verify
+  && yarn update
 
 # Set the working directory
 WORKDIR /protractor/
