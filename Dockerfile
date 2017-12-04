@@ -76,8 +76,10 @@ RUN rm -fr /root/tmp
 RUN npm install --unsafe-perm -g \
     protractor \
     typescript \
-  && yarn upgrade \
-  && npm update
+  && npm update \
+# Get the latest drivers
+  && webdriver-manager update \
+  && npm cache verify
 
 # Set the working directory
 WORKDIR /protractor/
