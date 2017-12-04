@@ -75,9 +75,9 @@ RUN rm -fr /root/tmp
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
 RUN npm install --unsafe-perm -g \
     protractor \
-    typescript
+    typescript \
   && yarn upgrade \
-  && npm update \
+  && npm update
 
 # Set the working directory
 WORKDIR /protractor/
