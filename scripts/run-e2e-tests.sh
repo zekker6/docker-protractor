@@ -14,7 +14,9 @@ echo "Protractor version: " $(protractor --version)
 
 # Verifies that versions and hashed value of the package contents in the project’s package.json matches that of yarn’s lock file.
 # This helps to verify that the package dependencies have not been altered.
-yarn check --integrity
+# https://github.com/yarnpkg/yarn/issues/3167
+# yarn check --integrity
+yarn check
 # Install the necessary packages
 yarn install
 # Run the Selenium installation script, located in the local node_modules/ directory.

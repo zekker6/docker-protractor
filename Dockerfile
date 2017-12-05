@@ -39,8 +39,8 @@ RUN apt-get update -qqy \
     build-essential
 
 # Yarn install
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN wget -q -O - https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
+  && sh -c 'echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list'
 
 # Latest Google Chrome installation package
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
@@ -73,13 +73,12 @@ RUN rm -fr /root/tmp
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
-RUN npm install --unsafe-perm -g \
+RUN yarn global add \
     protractor \
     typescript \
   && npm update \
 # Get the latest drivers
-  && webdriver-manager update \
-  && npm cache verify
+  && webdriver-manager update
 
 # Set the working directory
 WORKDIR /protractor/
