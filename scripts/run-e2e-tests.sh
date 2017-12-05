@@ -12,13 +12,13 @@ echo "Yarn directory: " $(yarn config get prefix)
 echo "Typescript version: " $(tsc --version) " and the TSC path: " $(which tsc)
 echo "Protractor version: " $(protractor --version)
 
+# Install the necessary packages
+yarn install
 # Verifies that versions and hashed value of the package contents in the project’s package.json matches that of yarn’s lock file.
 # This helps to verify that the package dependencies have not been altered.
 # https://github.com/yarnpkg/yarn/issues/3167
 # yarn check --integrity
 yarn check
-# Install the necessary packages
-yarn install
 # Run the Selenium installation script, located in the local node_modules/ directory.
 # This script downloads the files required to run Selenium itself and build a start script and a directory with them.
 # When this script is finished, we can start the standalone version of Selenium with the Chrome driver by executing the start script.
