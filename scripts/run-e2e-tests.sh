@@ -31,7 +31,7 @@ node ./node_modules/protractor/bin/webdriver-manager update
 echo "Running Protractor tests"
 # X11 for Ubuntu is not configured! The following configurations are needed for XVFB.
 # Make a new display with virtual screen 0 with resolution 1920x1080 24dpi
-xvfb-run --server-args="-screen 0 1920x1080x24" -a $@
+xvfb-run --server-args="-screen 0 2880x1800x24" -a $@
 export RESULT=$?
 
 echo "Protractor tests have done"
