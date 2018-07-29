@@ -16,12 +16,12 @@ image-update() {
 }
 
 image-cleanup() {
-    declare desc="Removes all exited containers and old testcafe images"
+    declare desc="Removes all exited containers and old images"
 
     container-remove-exited
 
-    local all_images=$(docker images | grep "hortonworks/cloud-web-testcafe"| sed "s/ \+/ /g"|cut -d' ' -f 1,2|tr ' ' : | tail -n +1)
-    local keep_image=hortonworks/cloud-web-testcafe:$DOCKER_TAG
+    local all_images=$(docker images | grep "hortonworks/cloudbreak-web-e2e"| sed "s/ \+/ /g"|cut -d' ' -f 1,2|tr ' ' : | tail -n +1)
+    local keep_image=hortonworks/cloudbreak-web-e2e:$DOCKER_TAG
     local images_to_delete=$(image-get-old <(echo $all_images) <(echo $keep_image))
 
     if [ -n "$images_to_delete" ]; then
