@@ -1,4 +1,5 @@
 # https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e-env-env-file
+DOCKER_TAG
 BASE_URL
 USERNAME
 PASSWORD
