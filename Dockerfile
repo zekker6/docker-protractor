@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 MAINTAINER Hortonworks
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
@@ -26,13 +26,12 @@ RUN apt-get update -qqy \
     libfreetype6 \
     libfontconfig
 
-# Nodejs 8 with npm install
+# Nodejs 10 with npm install
 # https://github.com/nodesource/distributions#installation-instructions
 RUN apt-get update -qqy \
   && apt-get -qqy install \
-    software-properties-common \
-    python-software-properties
-RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    software-properties-common
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     nodejs \
