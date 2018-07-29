@@ -28,7 +28,7 @@ image-cleanup() {
       echo "Found old/different versioned images: $images_to_delete"
       docker rmi $images_to_delete
     else
-      echo "Not found any different versioned images (based on docker-compose.yml). Skip cleanup"
+      echo "Not found any different versioned images. Skip cleanup"
     fi
 }
 
