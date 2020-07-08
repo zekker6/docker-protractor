@@ -2,7 +2,7 @@
 
 # To run your test cases in this image
 1. Install and set up your [Docker](https://docs.docker.com/engine/installation/) environment 
-2. Pull the `hortonworks/cloudbreak-web-e2e` image from [DockerHub](https://hub.docker.com/r/hortonworks/cloudbreak-web-e2e/)
+2. Pull the `zekker6/protractor-headless` image from [DockerHub](https://hub.docker.com/r/zekker6/protractor-headless/)
 3. If you have any environment variable which is used for your test project, provide here [environment file](support/testenv).
 4. You can see an example for execute your protractor tests in this Docker container at [Makefile](Makefile):
     ```
@@ -11,9 +11,8 @@
            --rm \
            --net=host \
            --name cloud-e2e-runner \
-           --env-file $(ENVFILE) \
            -v $(PWD):/protractor/project \
-           hortonworks/cloudbreak-web-e2e yarn test
+           zekker6/protractor-headless yarn test
     ```
    >`$(PWD)` or `pwd` the root folder of your Protractor test project. The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
 
@@ -25,6 +24,21 @@ Chrome uses sandboxing, therefore if you try and run Chrome within a non-privile
 > "Failed to move to new namespace: PID namespaces supported, Network namespace supported, but failed: errno = Operation not permitted".
 
 The `--privileged` flag gives the container almost the same privileges to the host machine resources as other processes running outside the container, which is required for the sandboxing to run smoothly.
+
+Note: chrome now will not run under root user into container, so either add user in docker or use the following in protractor config:
+
+```js
+exports.config = {
+  ...
+  capabilities: {
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['--no-sandbox']
+    }
+  },
+};
+
+```
 
 <sub>Based on the [Webnicer project](https://hub.docker.com/r/webnicer/protractor-headless/).</sub>
 
@@ -45,11 +59,10 @@ Here is the main part:
            --privileged \
            --rm \
            --name $TEST_CONTAINER_NAME \
-           --env-file $ENVFILE \
            --net=host \
            -v $(pwd):/protractor/project \
            -v /dev/shm:/dev/shm \
-           hortonworks/cloudbreak-web-e2e yarn test
+           zekker6/protractor-headless yarn test
            RESULT=$?
    fi
    exit $RESULT

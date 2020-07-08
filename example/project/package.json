@@ -1,0 +1,12 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "protractor conf.js"
+  },
+  "devDependencies": {
+    "protractor": "^7.0.0"
+  }
+}

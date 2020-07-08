@@ -1,20 +1,10 @@
-DOCKER_TAG ?= $(shell git describe --tags --first-parent | sed -nre '/([0-9]\.*)+([0-9])$\/p')
-ENVFILE=./support/testenv
-
-ifneq (,$(findstring cannot,$(DOCKER_TAG)))
-	DOCKER_TAG=latest
-endif
-
 all:	build run
 
 refresh-image:
-	docker pull hortonworks/cloudbreak-web-e2e
-
-run-gui-tests:
-	DOCKER_TAG=$(DOCKER_TAG) ./scripts/e2e-gui-test.sh
+	docker pull zekker6/protractor-headless
 
 build:
-	docker build -t hortonworks/cloudbreak-web-e2e .
+	docker build -t zekker6/protractor-headless .
 
 run:
 	docker run -it \
@@ -22,9 +12,18 @@ run:
 		--rm \
 		--net=host \
 		--name cloud-e2e-runner \
-		--env-file $(ENVFILE) \
 		-v $(PWD):/protractor/project \
-		hortonworks/cloudbreak-web-e2e:$(DOCKER_TAG) yarn test
+		zekker6/protractor-headless:latest yarn test
+	RESULT=$?
+
+check_example:
+	docker run -it \
+		--privileged \
+		--rm \
+		--net=host \
+		--name cloud-e2e-runner \
+		-v $(PWD)/example/project:/protractor/project \
+		zekker6/protractor-headless:latest yarn test
 	RESULT=$?
 
 .PHONY:

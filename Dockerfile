@@ -1,9 +1,10 @@
 FROM ubuntu:bionic
-MAINTAINER Hortonworks
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
 ENV DEBIAN_FRONTEND noninteractive
+ENV PROTRACTOR_RESOLUTION_CONFIG 2880x1800x24
+ENV RUN_YARN_CHECK 'y'
 
 # Update is used to resynchronize the package index files from their sources. An update should always be performed before an upgrade.
 RUN apt-get update -qqy \
@@ -48,13 +49,14 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo ap
 # Latest Ubuntu Google Chrome, XVFB and JRE installs
 RUN apt-get update -qqy \
   && apt-get -qqy install \
+    jq \
     xvfb \
     google-chrome-stable \
     firefox \
     default-jre \
     yarn
 
-RUN GECKODRIVER_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/geckodriver/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') \
+RUN GECKODRIVER_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/geckodriver/releases/latest" | jq -r .tag_name) \
   && echo $GECKODRIVER_VERSION \
   && wget --no-verbose --output-document /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz \
   && tar --directory /opt -zxf /tmp/geckodriver.tar.gz \
@@ -74,7 +76,6 @@ RUN rm -fr /root/tmp
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
 RUN yarn global add \
     protractor \
-    typescript \
   && npm update \
 # Get the latest drivers
   && webdriver-manager update
@@ -83,7 +84,7 @@ RUN yarn global add \
 WORKDIR /protractor/
 
 # Copy the run sript/s from local folder to the container's related folder
-COPY /scripts/run-e2e-tests.sh /entrypoint.sh
+COPY scripts/run-e2e-tests.sh /entrypoint.sh
 
 # Set the HOME environment variable for the test project
 ENV HOME=/protractor/project

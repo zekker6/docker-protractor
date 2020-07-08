@@ -1,0 +1,9 @@
+  test:
+    image: zekker6/protractor-headless
+    privileged: true
+    shm_size: 2048M
+    environment:
+      RUN_YARN_CHECK: "n"
+    volumes:
+      - ./project:/protractor/project
+    command: ["yarn", "test"]
