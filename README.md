@@ -16,6 +16,10 @@
     ```
    >`$(PWD)` or `pwd` the root folder of your Protractor test project. The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
 
+# Example project
+
+Example project is located at [Example folder](example/), example run without compose can be found in [Makefile](Makefile).
+
 # Advanced options and information
 
 ## --privileged
