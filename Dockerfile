@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
