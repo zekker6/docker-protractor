@@ -23,7 +23,6 @@ RUN apt-get update -qqy \
     xfonts-75dpi \
     xfonts-cyrillic \
     xfonts-scalable \
-    ttf-ubuntu-font-family \
     libfreetype6 \
     libfontconfig
 
