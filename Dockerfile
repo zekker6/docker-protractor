@@ -26,7 +26,7 @@ RUN apt-get update -qqy \
     libfreetype6 \
     libfontconfig
 
-# Nodejs 10 with npm install
+# Nodejs 18 with npm install
 # https://github.com/nodesource/distributions#installation-instructions
 RUN apt-get update -qqy \
   && apt-get -qqy install \
@@ -70,6 +70,7 @@ RUN apt-get clean \
 # https://github.com/nodejs/node-gyp/issues/454
 # https://github.com/npm/npm/issues/2952
 RUN rm -fr /root/tmp
+WORKDIR /protractor
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
