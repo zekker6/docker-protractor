@@ -1,5 +1,5 @@
   test:
-    image: zekker6/protractor-headless
+    image: zekker6/protractor-headless@sha256:34e3fe8284cc68deedfff756c36d1914a048952fa30437bf4b8d5b1a1bbf3a38
     privileged: true
     shm_size: 2048M
     environment:
